@@ -1,71 +1,60 @@
-version: '2'
+version: '3'
 services:
  da1:
-  image: antitree/private-tor
-  expose:
-    - "7000"
-    - "9030"
+  image: antitree/private-tor-test
   environment:
     ROLE: DA
   volumes:
     ## Needed to keep track of other nodes
-    - ./tor:/tor
+    - tor:/tor
  da2:
-  image: antitree/private-tor
-  expose:
-    - "7000"
-    - "9030"
+  image: antitree/private-tor-test
   environment:
     ROLE: DA
   volumes:
     ## Needed to keep track of other nodes
-    - ./tor:/tor
+    - tor:/tor
  da3:
-  image: antitree/private-tor
-  expose:
-    - "7000"
-    - "9030"
+  image: antitree/private-tor-test
   environment:
     ROLE: DA
   volumes:
     ## Needed to keep track of other nodes
-    - ./tor:/tor
+    - tor:/tor
  relay:
-  image: antitree/private-tor
-  expose:
-    - "7000"
-    - "9030"
+  image: antitree/private-tor-test
   environment:
     ROLE: RELAY
+  deploy:
+     replicas: 6
   volumes:
-    - ./tor:/tor
+    - tor:/tor
   depends_on:
     # Make sure the DA's are already up
     - da1
     - da2
     - da3
  exit:
-  image: antitree/private-tor
-  expose:
-    - "7000"
-    - "9030"
+  image: antitree/private-tor-test
   environment:
     ROLE: EXIT
+  deploy:
+    replicas: 6
   volumes:
-    - ./tor:/tor
+    - tor:/tor
   depends_on:
     # Make sure the DA's are already up
     - da1
     - da2
     - da3
  client:
-  image: antitree/private-tor
+  image: antitree/private-tor-test
   ports:
     # Setups a listener on host machine
     - "9050:9050"
     - "9051:9051"
   volumes:
-    - ./tor:/tor
+    - tor:/tor
   environment:
     ROLE: CLIENT
   depends_on: 
@@ -73,9 +62,7 @@ services:
     - da2
     - da3
  hs:
-  image: antitree/private-tor
-  expose:
-    - "80"
+  image: antitree/private-tor-test
   environment:
     ROLE: HS
     # This will create a hidden service that points to
@@ -84,7 +71,9 @@ services:
     TOR_HS_PORT: "80"
     TOR_HS_ADDR: "web"
   volumes:
-    - ./tor:/tor
+    - tor:/tor
+  deploy:
+    replicas: 4
   depends_on:
     - da1
     - da2
@@ -93,7 +82,6 @@ services:
     - web
  web:
   image: nginx
-  expose:
-    - "80"
-  
 
+volumes:
+ tor:
