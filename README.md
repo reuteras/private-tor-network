@@ -4,14 +4,11 @@
 
 ### Quickstart
 
-The easiest way to get a tor network up and running is to use the docker-compose create and then scale function
+The easiest way to get a tor network up and running is to use `docker swarm deploy` command:
 
 ```
-docker-compose up 
-docker-compose scale relay=5 exit=3 
+docker stack deploy --compose-file docker-compose.yml torstack
 ```
-
-This will create 3 directory authorities (DA's), 1 client listning on port 9050, 5 relays, and 3 exits. You can scale to whatever you want. 
 
 ### Uses
 
@@ -31,7 +28,7 @@ All of the required information that other nodes need to know about on the netwo
 
 ### Running Individual Roles
 
-You can manually build a tor network if you don't want to use docker-compose but you'll need to make sure you pass the correct DA fingerprints to each of the servers. (Don't for you automatically with docker-compose) For example, this would make the first directory authority (DA)
+You can manually build a tor network if you don't want to use docker stack but you'll need to make sure you pass the correct DA fingerprints to each of the servers. (Done for you automatically with docker stack deploy) For example, this would make the first directory authority (DA)
 `docker run -e ROLE=DA antitree/private-tor`
 
 Or setup a relay:
@@ -51,7 +48,7 @@ Available roles right now are:
 
 If you'd like to run an onion service, you can use the `TOR_HS_PORT` and `TOR_HS_ADDRESS` environment variables. By default, there is a hidden service setup in the docker-compose.yml file. 
 
-Example configuration that will run an onion service named "hs" and a web server named "web". This will link the web service to the onion service so that "hs" will forward connections to "web" on port 80. This is done using the `links` configuration feature for docker-compose. 
+Example configuration that will run an onion service named "hs" and a web server named "web". This will link the web service to the onion service so that "hs" will forward connections to "web" on port 80. 
 
 ```
  hs:
@@ -140,16 +137,14 @@ Control Port password: password
 
 Here are a few things to try if you're runing into issues:
 
-* Check the tor logs sent to stdout `docker logs -f torserver_da_1`
-* Check all the logs with `docker-compose logs`
+* Check the tor logs sent to stdout `docker logs -f torstack_da_1.xxxxxx`
 * Enable verbose logging by changing the `./config/torrc` 
-* Check permissions for your ./tor folder
-* Delete the files in your ./tor folder so you can start from scratch (or specifically the torrc.da file)
-* To cleanup the environment and start over you can use `docker-compose kill` and `docker-compose rm -ra` to remove them all. 
+* If you're using the old `docker-compose.2.yml` with the old storage, check permissions for your ./tor folder
+* Delete the old `tor` named volume from Docker with `docker volume rm torstack` or whatever you named your stack
 
 ### TODO
 
-* Wait for someone to yell at me about using scale like this and then move to the new networking
+* DONE: Wait for someone to yell at me about using scale like this and then move to the new networking
 
 ### Dislaimer
 
