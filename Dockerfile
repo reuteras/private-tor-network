@@ -14,7 +14,7 @@
 #   docker run --rm -it -e ROLE=DA antitree/tor-server /bin/bash
 
 FROM debian:jessie
-MAINTAINER Peter Reuterås peter@reuteras.net
+MAINTAINER PR code@reuteras.se
 
 # Sets which version of tor to use. See the Tor Projects git page for available tags
 # Examples:
