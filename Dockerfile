@@ -1,4 +1,6 @@
-#
+FROM debian:jessie
+MAINTAINER PR code@reuteras.se
+
 # Dockerfile for the Private Tor Network 
 #
 # This is a dockerfile to build a Debian host and
@@ -12,9 +14,6 @@
 #   manually:
 #   
 #   docker run --rm -it -e ROLE=DA antitree/tor-server /bin/bash
-
-FROM debian:jessie
-MAINTAINER PR code@reuteras.se
 
 # Sets which version of tor to use. See the Tor Projects git page for available tags
 # Examples:
