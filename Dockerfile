@@ -1,18 +1,18 @@
-FROM debian:jessie
-MAINTAINER PR code@reuteras.se
+FROM debian:stretch
+MAINTAINER PR code@ongoing.today
 
-# Dockerfile for the Private Tor Network 
+# Dockerfile for the Private Tor Network
 #
 # This is a dockerfile to build a Debian host and
 # compile a version of tor from the Tor apt repos.
 # NOTE: This is a modification of chriswayg's solid
-# base.  
+# base.
 #
 # Usage:
 #   This works best using a docker compose command so you can run the
 #   necessary other servers for it to talk to. But if you want o run
 #   manually:
-#   
+#
 #   docker run --rm -it -e ROLE=DA antitree/tor-server /bin/bash
 
 # Sets which version of tor to use. See the Tor Projects git page for available tags
@@ -27,15 +27,15 @@ ENV TOR_VER="release-0.3.5"
 #  feel free to change this to master to get the latest and greatest
 
 # Sets the nickname if you didn't set one, default ports, and the path
-#  where to mount the key material used by the clients. 
+#  where to mount the key material used by the clients.
 ENV TERM=xterm \
     TOR_ORPORT=7000 \
     TOR_DIRPORT=9030 \
-    TOR_DIR=/tor 
+    TOR_DIR=/tor
 
 # Install build dependencies
 RUN apt-get update && \
-    build_temps="build-essential automake" && \ 
+    build_temps="build-essential automake" && \
     build_deps="libssl-dev zlib1g-dev libevent-dev ca-certificates\
         dh-apparmor libseccomp-dev dh-systemd \
         git" && \

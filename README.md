@@ -24,7 +24,7 @@ If you're going "Why do I want this?" here's a few examples:
 
 ### Network Settings
 
-All of the required information that other nodes need to know about on the network are stored in a mapped volume: `./tor:/tor`. (I know you shouldn't do this but I needed it for a class) NOTE: This folder must exist on the host and allow the debian-tor user to create files in this directory. 
+All of the required information that other nodes need to know about on the network are stored in a mapped volume: `./tor:/tor`. (I know you shouldn't do this but I needed it for a class) NOTE: This folder must exist on the host and allow the debian-tor user to create files in this directory.
 
 ### Running Individual Roles
 
@@ -46,9 +46,9 @@ Available roles right now are:
 
 ### Onion Services
 
-If you'd like to run an onion service, you can use the `TOR_HS_PORT` and `TOR_HS_ADDRESS` environment variables. By default, there is a hidden service setup in the docker-compose.yml file. 
+If you'd like to run an onion service, you can use the `TOR_HS_PORT` and `TOR_HS_ADDRESS` environment variables. By default, there is a hidden service setup in the docker-compose.yml file.
 
-Example configuration that will run an onion service named "hs" and a web server named "web". This will link the web service to the onion service so that "hs" will forward connections to "web" on port 80. 
+Example configuration that will run an onion service named "hs" and a web server named "web". This will link the web service to the onion service so that "hs" will forward connections to "web" on port 80.
 
 ```
  hs:
@@ -58,7 +58,7 @@ Example configuration that will run an onion service named "hs" and a web server
   environment:
     ROLE: HS
     # This will create a hidden service that points to
-    # the service "web" which is runing nginx. You can 
+    # the service "web" which is runing nginx. You can
     # change this to whatever ip or hostname you want
     TOR_HS_PORT: "80"
     TOR_HS_ADDR: "web"
@@ -95,12 +95,12 @@ The container is built off of [chriswayg/tor-server](https://github.com/chrisway
 
 ### Things to try
 
-The `/util/` directory contains a few scripts to play with one the host computer. Once you have a 
-private tor network up and running you can try out some of the tools in there. 
+The `/util/` directory contains a few scripts to play with one the host computer. Once you have a
+private tor network up and running you can try out some of the tools in there.
 
 **Using Arm**:
 
-With the tor control port exposed to the host, you can use arm to monitor the client. 
+With the tor control port exposed to the host, you can use arm to monitor the client.
 ```
 apt-get install tor-arm
 arm
@@ -109,8 +109,8 @@ NOTE: There is a password to protect the control port right now. Enter "password
 
 ![arm screenshot](https://raw.githubusercontent.com/antitree/private-tor-network/master/doc/arm.png)
 
-You can also connect arm to one of the containers if you know it's ip. You can find the IPs by running the 
-`get_consensus.py` script provided or however otherway you feel like. 
+You can also connect arm to one of the containers if you know it's ip. You can find the IPs by running the
+`get_consensus.py` script provided or however otherway you feel like.
 
 ```arm -i 172.19.0.3:9051```
 
@@ -124,7 +124,7 @@ while they decided on a consensus.)
 
 **Tor-prompt**:
 
-If you've installed arm you will probably also have the `tor-prompt` command. You can use it to manually 
+If you've installed arm you will probably also have the `tor-prompt` command. You can use it to manually
 gather information about some of the containers that have their Control Port exposed like so:
 
 ```
@@ -138,7 +138,7 @@ Control Port password: password
 Here are a few things to try if you're runing into issues:
 
 * Check the tor logs sent to stdout `docker logs -f torstack_da_1.xxxxxx`
-* Enable verbose logging by changing the `./config/torrc` 
+* Enable verbose logging by changing the `./config/torrc`
 * If you're using the old `docker-compose.2.yml` with the old storage, check permissions for your ./tor folder
 * Delete the old `tor` named volume from Docker with `docker volume rm torstack` or whatever you named your stack
 
@@ -148,7 +148,7 @@ Here are a few things to try if you're runing into issues:
 
 ### Dislaimer
 
-This project is in no way associated with the Tor Project or their developers. Like many people I'm a fan of Tor and recommend considering ways you can help the project. Consider running a relay, donating, or writing code. 
+This project is in no way associated with the Tor Project or their developers. Like many people I'm a fan of Tor and recommend considering ways you can help the project. Consider running a relay, donating, or writing code.
 
 ### Resources
 - https://github.com/andrewmichaelsmith/private-tor-network-kube Used some of this work to port to a kubernetes config
