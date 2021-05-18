@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:stretch
 MAINTAINER PR code@ongoing.today
 
 # Dockerfile for the Private Tor Network
