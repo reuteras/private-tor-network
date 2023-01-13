@@ -1,5 +1,5 @@
 FROM debian:stretch
-MAINTAINER PR code@ongoing.today
+LABEL org.opencontainers.image.authors="code@ongoing.today"
 
 # Dockerfile for the Private Tor Network
 #
