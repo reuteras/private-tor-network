@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:bullseye
 LABEL org.opencontainers.image.authors="code@ongoing.today"
 
 # Dockerfile for the Private Tor Network
