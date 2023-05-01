@@ -37,7 +37,7 @@ ENV TERM=xterm \
 RUN apt update && \
     build_temps="build-essential automake" && \
     build_deps="libssl-dev zlib1g-dev libevent-dev ca-certificates\
-        dh-apparmor libseccomp-dev dh-systemd \
+        dh-apparmor libseccomp-dev \
         git" && \
     DEBIAN_FRONTEND=noninteractive apt -y --no-install-recommends install $build_deps $build_temps \
         init-system-helpers \
